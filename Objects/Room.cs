@@ -28,7 +28,7 @@ public class Room
         }
         else
         {
-            Debug.Log("There are too many exits!");
+            Debug.Log("There are too many exits!"); // testing
         }
         
     }
