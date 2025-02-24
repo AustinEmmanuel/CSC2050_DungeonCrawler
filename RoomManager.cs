@@ -10,7 +10,6 @@ public class RoomManager : MonoBehaviour
     void Start()
     {
         Core.thePlayer = new Player("Austin");
-        
         this.theDungeon = new Dungeon();
 
         this.theDoors[0].SetActive(Core.northDoor);

@@ -9,6 +9,7 @@ public class Player
     public Player(string name)
     {
         this.name = name; 
+        this.currentRoom = null;
     }
 
     public void setCurrentRoom(Room r)

@@ -7,6 +7,7 @@ public class Room
     private Exit[] availableExits = new Exit[4];
     private int currNumberOfExits = 0;
     private string name;
+
     public Room(string name)
     {
         this.name = name;
@@ -16,6 +17,7 @@ public class Room
     public void setPlayer(Player p)
     {
         this.thePlayer = p;
+        this.thePlayer.setCurrentRoom(this);
     }
 
     public void addExit(string direction, Room destination)
