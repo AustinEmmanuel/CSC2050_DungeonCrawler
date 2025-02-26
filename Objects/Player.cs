@@ -12,6 +12,11 @@ public class Player
         this.currentRoom = null;
     }
 
+    public Room getCurrentRoom()
+    {
+        return this.currentRoom; 
+    }
+
     public void setCurrentRoom(Room r)
     {
         this.currentRoom = r; 

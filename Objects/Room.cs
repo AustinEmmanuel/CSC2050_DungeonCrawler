@@ -6,6 +6,7 @@ public class Room
     private GameObject[] theDoors;
     private Exit[] availableExits = new Exit[4];
     private int currNumberOfExits = 0;
+    
     private string name;
 
     public Room(string name)
@@ -14,6 +15,22 @@ public class Room
         this.thePlayer = null;
     }
 
+    public string getName()
+    {
+        return this.name;
+    }
+
+    public bool hasExit(string direction)
+    {
+        for(int i = 0; i < this.currNumberOfExits; i++)
+        {
+            if(this.availableExits[i].getDirection() == direction)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public void setPlayer(Player p)
     {
         this.thePlayer = p;

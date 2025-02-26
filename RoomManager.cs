@@ -11,6 +11,7 @@ public class RoomManager : MonoBehaviour
     {
         Core.thePlayer = new Player("Austin");
         this.theDungeon = new Dungeon();
+        //Console.log(Core.thePlayer.getCurrentRoom().getName);
 
         this.theDoors[0].SetActive(Core.northDoor);
         this.theDoors[1].SetActive(Core.southDoor);
