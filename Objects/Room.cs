@@ -29,6 +29,28 @@ public class Room
             // place them in the destination room in that direction 
             // update the room the player is currently in so the  room exitst visually update
 
+            for(int i = 0; i < this.currNumberOfExits; i++)
+            {
+                if(String.Equals(this.availableExits[i].getDirection(), direction))
+                {
+                  // get the destination room in that direction
+                  Room destinationRoom = this.availableExits[i].getDestination();
+
+                  // remove the player from the current room
+                  this.thePlayer = null; 
+
+                  // place them in the destination room in that direction
+                  destinationRoom.setPlayer(Core.thePlayer); 
+                  
+                  // update the room the player is currently in so the room exits visually update
+                  Core.thePlayer.setCurrentRoom(destinationRoom);
+
+                  // Logging
+                  Debug.Log("The player has moved to the " + destinationRoom.getName()); 
+
+                  return;
+                }
+            }
         }
         else
         {

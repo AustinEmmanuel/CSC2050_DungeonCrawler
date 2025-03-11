@@ -40,18 +40,34 @@ public class RoomManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             // try to move north 
+            Debug.Log("Up Arrow Pressed");
+            Core.thePlayer.getCurrentRoom().tryToTakeExit("north");
+            this.resetRoom();
+            this.setupRoom();
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             // try to move south
+            Debug.Log("Down Arrow Pressed");
+            Core.thePlayer.getCurrentRoom().tryToTakeExit("south");
+            this.resetRoom();
+            this.setupRoom();
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             // try to move west
+            Debug.Log("Left Arrow Pressed");
+            Core.thePlayer.getCurrentRoom().tryToTakeExit("west");
+            this.resetRoom();
+            this.setupRoom();
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             // try to move east
+            Debug.Log("Right Arrow Pressed");
+            Core.thePlayer.getCurrentRoom().tryToTakeExit("east");
+            this.resetRoom();
+            this.setupRoom();
         }
     }
 }
