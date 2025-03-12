@@ -25,10 +25,6 @@ public class Room
     {
         if(this.hasExit(direction))
         {
-            // remove the player from the current room 
-            // place them in the destination room in that direction 
-            // update the room the player is currently in so the  room exitst visually update
-
             for(int i = 0; i < this.currNumberOfExits; i++)
             {
                 if(String.Equals(this.availableExits[i].getDirection(), direction))
