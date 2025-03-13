@@ -4,7 +4,6 @@ using System;
 public class RoomManager : MonoBehaviour
 {
     public GameObject[] theDoors; 
-    public GameObject mmRoomPrefab;
     private Dungeon theDungeon; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -43,13 +42,6 @@ public class RoomManager : MonoBehaviour
             // try to move north 
             Debug.Log("Up Arrow Pressed");
             Core.thePlayer.getCurrentRoom().tryToTakeExit("north");
-            GameObject newMMRoom = Instantiate(this.mmRoomPrefab);
-            Vector3 currPos = newMMRoom.transform.localPosition;
-            Vector3 newPos; 
-            newPos.x = currPos.x;
-            newPos.y = currPos.y;
-            newPos.z = currPos.z + 0.5f;
-            newMMRoom.transform.localPosition = newPos;
 
             this.setupRoom();
         }
