@@ -4,6 +4,7 @@ using System;
 public class RoomManager : MonoBehaviour
 {
     public GameObject[] theDoors; 
+    public GameObject mmRoomPrefab;
     private Dungeon theDungeon; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -35,35 +36,75 @@ public class RoomManager : MonoBehaviour
     }
 
     // Update is called once per frame
+    private Vector3 minimapPosition = new Vector3(14.32f, 0, 0);
+
+    // Orignial Logic
+    /*
+        GameObject newMMRoom = Instantiate(this.mmRoomPrefab);
+        Vector3 currPos = newMMRoom.transform.position;
+        Vector3 newPos = currPos;
+        newPos.x = currPos.x;
+        newPos.y = currPos.y;
+        newPos.z = currPos.z + 1.2f;
+        newMMRoom.transform.position = newPos;
+    */
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            // try to move north 
             Debug.Log("Up Arrow Pressed");
             Core.thePlayer.getCurrentRoom().tryToTakeExit("north");
 
+            GameObject newMMRoom = Instantiate(this.mmRoomPrefab);
+            Vector3 newPos = minimapPosition;
+            newPos.z += 1.2f; // Move forward
+            newMMRoom.transform.position = newPos;
+
+            // Update tracked position
+            minimapPosition = newPos; 
             this.setupRoom();
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            // try to move south
             Debug.Log("Down Arrow Pressed");
             Core.thePlayer.getCurrentRoom().tryToTakeExit("south");
+
+            GameObject newMMRoom = Instantiate(this.mmRoomPrefab);
+            Vector3 newPos = minimapPosition;
+            newPos.z -= 1.2f; // Move backward
+            newMMRoom.transform.position = newPos;
+
+            // Update tracked position
+            minimapPosition = newPos;
             this.setupRoom();
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            // try to move west
             Debug.Log("Left Arrow Pressed");
             Core.thePlayer.getCurrentRoom().tryToTakeExit("west");
+
+            GameObject newMMRoom = Instantiate(this.mmRoomPrefab);
+            Vector3 newPos = minimapPosition;
+            newPos.x -= 1.2f; // Move left
+            newMMRoom.transform.position = newPos;
+
+            // Update tracked position
+            minimapPosition = newPos;
             this.setupRoom();
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            // try to move east
             Debug.Log("Right Arrow Pressed");
             Core.thePlayer.getCurrentRoom().tryToTakeExit("east");
+
+            GameObject newMMRoom = Instantiate(this.mmRoomPrefab);
+            Vector3 newPos = minimapPosition;
+            newPos.x += 1.2f; // Move right
+            newMMRoom.transform.position = newPos;
+
+            // Update tracked position
+            minimapPosition = newPos;
             this.setupRoom();
         }
     }
