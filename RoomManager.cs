@@ -47,11 +47,11 @@ public class RoomManager : MonoBehaviour
             if(didChangeRoom)
             {
                 this.mmCurrPos.z = this.mmCurrPos.z + 1.2f;
-                if(!Core.hasBeenToRoom(Core.thePlayer.getCurrentRoom().getName()))
+                if(!Core.thePlayer.getCurrentRoom().getHasPlayerBeenHere())
                 {
                     GameObject newMMRoom = Instantiate(this.mmRoomPrefab);
                     newMMRoom.transform.position = this.mmCurrPos;
-                }  
+                }
             }   
         }
         else if(Input.GetKeyDown(KeyCode.LeftArrow))
@@ -61,7 +61,7 @@ public class RoomManager : MonoBehaviour
             if(didChangeRoom)
             {
                 this.mmCurrPos.x = this.mmCurrPos.x - 1.2f;
-                if(!Core.hasBeenToRoom(Core.thePlayer.getCurrentRoom().getName()))
+                if(!Core.thePlayer.getCurrentRoom().getHasPlayerBeenHere())
                 {
                     GameObject newMMRoom = Instantiate(this.mmRoomPrefab);
                     newMMRoom.transform.position = this.mmCurrPos;
@@ -75,7 +75,7 @@ public class RoomManager : MonoBehaviour
             if(didChangeRoom)
             {
                 this.mmCurrPos.x = this.mmCurrPos.x + 1.2f;
-                if(!Core.hasBeenToRoom(Core.thePlayer.getCurrentRoom().getName()))
+                if(!Core.thePlayer.getCurrentRoom().getHasPlayerBeenHere())
                 {
                     GameObject newMMRoom = Instantiate(this.mmRoomPrefab); 
                     newMMRoom.transform.position = this.mmCurrPos;
@@ -91,7 +91,7 @@ public class RoomManager : MonoBehaviour
             if(didChangeRoom)
             {
                 this.mmCurrPos.z = this.mmCurrPos.z - 1.2f;
-                if(!Core.hasBeenToRoom(Core.thePlayer.getCurrentRoom().getName()))
+                if(!Core.thePlayer.getCurrentRoom().getHasPlayerBeenHere())
                 {
                     GameObject newMMRoom = Instantiate(this.mmRoomPrefab);
                     newMMRoom.transform.position = this.mmCurrPos;
