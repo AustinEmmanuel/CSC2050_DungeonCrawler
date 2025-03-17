@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RoomManager : MonoBehaviour
@@ -11,7 +12,7 @@ public class RoomManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Core.thePlayer = new Player("Austin");
+        Core.thePlayer = new Player("Mike");
         this.theDungeon = new Dungeon();
         this.setupRoom();
         this.mmCurrPos = Core.mmStartPos;
@@ -51,7 +52,7 @@ public class RoomManager : MonoBehaviour
                 {
                     GameObject newMMRoom = Instantiate(this.mmRoomPrefab);
                     newMMRoom.transform.position = this.mmCurrPos;
-                }
+                }  
             }   
         }
         else if(Input.GetKeyDown(KeyCode.LeftArrow))

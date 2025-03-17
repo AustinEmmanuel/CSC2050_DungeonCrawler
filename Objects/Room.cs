@@ -9,7 +9,8 @@ public class Room
     private GameObject[] theDoors;
     private Exit[] availableExits = new Exit[4];
     private int currNumberOfExits = 0;
-    private bool hasPlayerBeenHere; 
+
+    private bool hasPlayerBeenHere;
 
     private string name;
 
@@ -20,14 +21,18 @@ public class Room
         this.hasPlayerBeenHere = false;
     }
 
-    public string getName()
-    {
-        return this.name;
-    }
-
     public bool getHasPlayerBeenHere()
     {
         return this.hasPlayerBeenHere;
+    }
+
+    public Player getPlayer()
+    {
+        return this.thePlayer;
+}
+    public string getName()
+    {
+        return this.name;
     }
 
     public bool tryToTakeExit(string direction)
@@ -89,7 +94,6 @@ public class Room
     {
         this.thePlayer = p;
         this.thePlayer.setCurrentRoom(this);
-        this.hasPlayerBeenHere = true;
     }
     public void addExit(string direction, Room destination)
     {
