@@ -1,28 +1,61 @@
 using UnityEngine;
-
+using System;
 public class Fight
 {
-    private Inhabitant attacker; 
+    private Inhabitant attacker;
     private Inhabitant defender;
 
-    public Fight()
+    public Fight(Inhabitant attacker, Inhabitant defender)
     {
-        int roll = Random.Range(0, 20) + 1; 
-        if(roll <= 10)
+        this.attacker = attacker;
+        this.defender = defender;
+
+        int roll = UnityEngine.Random.Range(0, 20) + 1;
+        if (roll <= 10)
         {
             Debug.Log("Monster goes first");
         }
         else
         {
             Debug.Log("Player goes first");
-        } 
+        }
     }
 
     public void startFight()
     {
-        // should have the attacker and defender fight each other until one of them is dead.
-        // the attacker and the defender should alternate between attacking each other.
-    
-    
+        bool isAttackerTurn = UnityEngine.Random.Range(0, 20) + 1 <= 10; 
+        
+        while (attacker.isAlive() && defender.isAlive()) 
+        {
+            if (isAttackerTurn)
+            {
+                Attack(attacker, defender);
+                isAttackerTurn = false; 
+            }
+            else
+            {
+                Attack(defender, attacker);
+                isAttackerTurn = true; 
+            }
+        }
+
+        // Determine who won
+        if (attacker.isAlive())
+        {
+            Debug.Log(attacker.getName() + " wins!");
+        }
+        else
+        {
+            Debug.Log(defender.getName() + " wins!");
+        }
+    }
+
+    private void Attack(Inhabitant attacker, Inhabitant defender)
+    {
+        // Generate the attack damage and apply it to the defender
+        int damage = attacker.attack(); 
+        defender.takeDamage(damage); 
+
+        Debug.Log(attacker.getName() + " attacks " + defender.getName() + " for " + damage + " damage.");
     }
 }

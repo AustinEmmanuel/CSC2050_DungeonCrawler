@@ -12,8 +12,8 @@ public class Monster : Inhabitant
         return this.currHp; 
     }
 
-    public string getName()
-    {
-        return this.name();
-    }
+    // public string getName()
+    // {
+    //     return this.name; 
+    // }
 }
