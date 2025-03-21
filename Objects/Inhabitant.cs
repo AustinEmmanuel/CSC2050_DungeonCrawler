@@ -14,24 +14,24 @@ public abstract class Inhabitant
         this.currHp = this.maxHp;
         this.ac = Random.Range(10, 20);
     }
-
+    
     public string getName()
     {
-        return this.name;
+        return this.name; 
     }
 
-    public int attack()
+    public bool isDead()
     {
-        return Random.Range(1, 10);
+        return this.currHp <= 0; 
+    }
+
+    public int getAc()
+    {
+        return this.ac; 
     }
 
     public void takeDamage(int damage)
     {
         this.currHp -= damage; 
-    }
-
-    public bool isAlive()
-    {
-        return this.currHp > 0; 
     }
 }

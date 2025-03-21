@@ -2,20 +2,19 @@ using UnityEngine;
 
 public class FightSceneManager : MonoBehaviour
 {
-    private Inhabitant player;
-    private Inhabitant monster;
+    public GameObject player;
+    public GameObject monster;
 
+    private Monster theMonster;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = new Player("Austin");   
-        monster = new Monster("Goblin");
+        // Core.thePlayer = new Player("Player");
+        this.theMonster = new Monster("Goblin");
+        Fight fight = new Fight(this.theMonster);
         
-        
-        Fight fight = new Fight(player, monster);
-        
-       
-        fight.startFight();
+        fight.startFight(player, monster); // we need this to be experienced over time, so we need to 
     }
 
     // Update is called once per frame
