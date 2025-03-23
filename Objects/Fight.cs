@@ -1,65 +1,74 @@
 using UnityEngine;
-using System;
+
 public class Fight
 {
     private Inhabitant attacker;
     private Inhabitant defender;
+    private float attackInterval = 0.2f; // Time between attacks in seconds
+    private float timeSinceLastAttack = 0.0f;
+    private bool fightOver = false;
 
-    private Monster theMonster;
-
-    public Fight(Monster m)
+    public Fight(Inhabitant player, Inhabitant monster)
     {
-        this.theMonster = m;
-
-        // initially determine who goes first 
-        int roll = UnityEngine.Random.Range(0, 20) + 1;
+        int roll = Random.Range(0, 20) + 1;
         if (roll <= 10)
         {
             Debug.Log("Monster goes first");
-            this.attacker = m;
-            this.defender = Core.thePlayer;
+            this.attacker = monster;
+            this.defender = player;
         }
         else
         {
             Debug.Log("Player goes first");
-            this.attacker = Core.thePlayer;
-            this.defender = m;
+            this.attacker = player;
+            this.defender = monster;
         }
     }
 
-    public void startFight(GameObject playerGO, GameObject monsterGO)
+    public void UpdateFight(float deltaTime, GameObject playerGO, GameObject monsterGO)
     {
-        while(true)
+        if (fightOver)
         {
-            int attackRoll = UnityEngine.Random.Range(0, 20) + 1;
-            if(attackRoll >= this.defender.getAc())
+            return; // Exit if the fight is over
+        }
+
+        timeSinceLastAttack += deltaTime;
+
+        if (timeSinceLastAttack >= attackInterval)
+        {
+            timeSinceLastAttack = 0.0f; // Reset the timer
+
+            int attackRoll = Random.Range(0, 20) + 1;
+            if (attackRoll >= this.defender.getAc())
             {
-                // attacker hits the defender
-                int damage = UnityEngine.Random.Range(1, 6); // 1 to 5 damage
+                // Attacker hits the defender
+                int damage = Random.Range(1, 6); // 1 to 5 damage
                 this.defender.takeDamage(damage);
 
-                if(this.defender.isDead())
+                if (this.defender.isDead())
                 {
                     Debug.Log(this.attacker.getName() + " killed " + this.defender.getName());
-                    if(this.defender is Player)
+                    fightOver = true; // Set the flag to indicate the fight is over
+                    if (this.defender is Player)
                     {
-                        // player is dead, end game
-                        playerGO.SetActive(false); // hide the player 
+                        // Player is dead, end game
+                        playerGO.SetActive(false); // Hide the player
                     }
                     else
                     {
-                        // monster died
+                        // Monster died
                         Debug.Log("Monster dead");
-                        GameObject.Destroy(monsterGO); // remove the monster from the scene
-                        
+                        GameObject.Destroy(monsterGO); // Remove the monster from the scene
                     }
-                    break; // exit the fight loop
+                    return; // Exit the fight loop
                 }
             }
             else
             {
                 Debug.Log(this.attacker.getName() + " missed " + this.defender.getName());
             }
+
+            // Swap attacker and defender for the next round
             Inhabitant temp = this.attacker;
             this.attacker = this.defender;
             this.defender = temp;
