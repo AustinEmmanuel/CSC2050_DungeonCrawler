@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Inhabitant
 {
-    protected int currHp; 
+    protected int currHp;
     protected int maxHp;
     protected int ac;
     protected string name;
@@ -12,26 +12,25 @@ public abstract class Inhabitant
         this.name = name;
         this.maxHp = Random.Range(30, 50);
         this.currHp = this.maxHp;
-        this.ac = Random.Range(10, 20);
+        this.ac = Random.Range(5, 12);
     }
-    
+
     public string getName()
     {
-        return this.name; 
-    }
+        return this.name;
+    }   
 
     public bool isDead()
     {
-        return this.currHp <= 0; 
-    }
-
-    public int getAc()
-    {
-        return this.ac; 
+        return this.currHp <= 0;
     }
 
     public void takeDamage(int damage)
     {
-        this.currHp -= damage; 
+        this.currHp -= damage;
+    }
+    public int getAC()
+    {
+        return this.ac;
     }
 }
