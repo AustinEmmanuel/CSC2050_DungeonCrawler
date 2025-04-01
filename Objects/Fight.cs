@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem.Interactions;
 
 public class Fight
 {
@@ -14,7 +13,7 @@ public class Fight
     {
         this.theMonster = m;
 
-        //initially determine who goes first
+        // Initially determine who goes first
         int roll = Random.Range(0, 20) + 1;
         if (roll <= 10)
         {
@@ -28,7 +27,6 @@ public class Fight
             this.attacker = Core.thePlayer;
             this.defender = m;
         }
-
     }
 
     public bool isFightOver()
@@ -36,89 +34,86 @@ public class Fight
         return this.fightOver;
     }
 
-    public void takeASwing(GameObject playerGameObject, GameObject monsterGameObject)
+    // Add this method to return the current attacker
+    public Inhabitant getAttacker()
     {
-        int attackRoll = Random.Range(0, 20) + 1;
-        Debug.Log("Attack Roll: " + attackRoll);
-        Debug.Log("Defender AC: " + this.defender.getAC());
-        
-        if(attackRoll >= this.defender.getAC())
-        {
-            //attacker hits the defender
-            int damage = Random.Range(1, 6); //1 to 5 damage
-            this.defender.takeDamage(damage);
+        return this.attacker;
+    }
 
-            if(this.defender.isDead())
+    public void takeASwing(GameObject playerGameObject, GameObject monsterGameObject, string action = "normal")
+    {
+        if (this.attacker is Player)
+        {
+            // Player's turn
+            if (action == "power")
             {
-                this.fightOver = true;
-                Debug.Log(this.attacker.getName() + " killed " + this.defender.getName());
-                if(this.defender is Player)
+                // Power attack: 50% more damage, -25% attack roll
+                int attackRoll = Mathf.FloorToInt((Random.Range(0, 20) + 1) * 0.75f);
+                Debug.Log("Player Power Attack Roll: " + attackRoll);
+                if (attackRoll >= this.defender.getAC())
                 {
-                    //player died
-                    Debug.Log("Player died");
-                    //end the game
-                    playerGameObject.SetActive(false); //hide the player
+                    int damage = Mathf.FloorToInt(Random.Range(1, 6) * 1.5f); // 50% more damage
+                    this.defender.takeDamage(damage);
+                    Debug.Log("Player hits with a power attack for " + damage + " damage!");
                 }
                 else
                 {
-                    //monster died
-                    Debug.Log("Monster died");
-                    //remove the monster from the scene
-                    GameObject.Destroy(monsterGameObject); //remove the monster from the scene
+                    Debug.Log("Player's power attack missed!");
+                }
+            }
+            else if (action == "potion")
+            {
+                // Drink a potion: Heal 25% of max health
+                Player player = (Player)this.attacker;
+                int healAmount = Mathf.FloorToInt(player.getMaxHealth() * 0.25f);
+                player.heal(healAmount);
+                Debug.Log("Player drinks a potion and heals for " + healAmount + " HP!");
+            }
+            else
+            {
+                // Normal attack
+                int attackRoll = Random.Range(0, 20) + 1;
+                Debug.Log("Player Normal Attack Roll: " + attackRoll);
+                if (attackRoll >= this.defender.getAC())
+                {
+                    int damage = Random.Range(1, 6);
+                    this.defender.takeDamage(damage);
+                    Debug.Log("Player hits for " + damage + " damage!");
+                }
+                else
+                {
+                    Debug.Log("Player's normal attack missed!");
                 }
             }
         }
         else
         {
-            Debug.Log(this.attacker.getName() + " missed " + this.defender.getName());
-        }
-
-        Inhabitant temp = this.attacker;
-        this.attacker = this.defender;
-        this.defender = temp;
-    }
-
-    public void startFight(GameObject playerGameObject, GameObject monsterGameObject)
-    {
-        //should have the attacker and defender fight each until one of them dies.
-        //the attacker and defender should alternate between each fight round and
-        //the one who goes first was determined in the constructor.
-        while(true)
-        {
+            // Monster's turn: Always normal attack
             int attackRoll = Random.Range(0, 20) + 1;
-            if(attackRoll >= this.defender.getAC())
+            Debug.Log("Monster Attack Roll: " + attackRoll);
+            if (attackRoll >= this.defender.getAC())
             {
-                //attacker hits the defender
-                int damage = Random.Range(1, 6); //1 to 5 damage
+                int damage = Random.Range(1, 6);
                 this.defender.takeDamage(damage);
-
-                if(this.defender.isDead())
-                {
-                    Debug.Log(this.attacker.getName() + " killed " + this.defender.getName());
-                    if(this.defender is Player)
-                    {
-                        //player died
-                        Debug.Log("Player died");
-                        //end the game
-                        playerGameObject.SetActive(false); //hide the player
-                    }
-                    else
-                    {
-                        //monster died
-                        Debug.Log("Monster died");
-                        //remove the monster from the scene
-                        GameObject.Destroy(monsterGameObject); //remove the monster from the scene
-                    }
-                    break; //fight is over
-                }
+                Debug.Log("Monster hits for " + damage + " damage!");
             }
             else
             {
-                Debug.Log(this.attacker.getName() + " missed " + this.defender.getName());
+                Debug.Log("Monster's attack missed!");
             }
-            Inhabitant temp = this.attacker;
-            this.attacker = this.defender;
-            this.defender = temp;
         }
+
+        // Check if the defender is dead
+        if (this.defender.isDead())
+        {
+            this.fightOver = true;
+            Debug.Log(this.attacker.getName() + " killed " + this.defender.getName());
+            return;
+        }
+
+        // Swap attacker and defender for the next turn
+        Inhabitant temp = this.attacker;
+        this.attacker = this.defender;
+        this.defender = temp;
     }
 }
