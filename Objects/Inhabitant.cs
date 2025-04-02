@@ -20,6 +20,16 @@ public abstract class Inhabitant
         return this.name;
     }   
 
+    public int getCurrHp()
+    {
+        return this.currHp;
+    }
+
+    public int getMaxHp()
+    {
+        return this.maxHp;
+    }
+    
     public bool isDead()
     {
         return this.currHp <= 0;
