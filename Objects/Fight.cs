@@ -36,6 +36,7 @@ public class Fight
         return this.attacker is Player;
     }
 
+
     public bool isFightOver()
     {
         return this.fightOver;
@@ -46,7 +47,7 @@ public class Fight
         int attackRoll = Random.Range(0, 20) + 1;
         Debug.Log("Attack Roll: " + attackRoll);
         Debug.Log("Defender AC: " + this.defender.getAC());
-        
+
         if(attackRoll >= this.defender.getAC())
         {
             //attacker hits the defender
